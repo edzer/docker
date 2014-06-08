@@ -1,9 +1,8 @@
-# sshd
-#
-# VERSION               0.0.1
+# provide R in ubuntu 14.04
 
-#FROM     ubuntu:14.04
-FROM     ubuntu
+FROM     ubuntu:14.04
+
+MAINTAINER Edzer Pebesma edzer.pebesma@uni-muenster.de
 
 # make sure the package repository is up to date
 #echo "deb http://security.ubuntu.com/ubuntu trusty-security main restricted" >> /etc/apt/sources.list
@@ -30,6 +29,9 @@ RUN useradd -s '/bin/bash' edzer
 RUN echo 'edzer:screencast' | chpasswd
 
 RUN apt-get install --fix-missing -y r-base r-cran-boot r-cran-class r-cran-cluster r-cran-codetools r-cran-foreign r-cran-kernsmooth r-cran-lattice r-cran-mass r-cran-matrix r-cran-mgcv r-cran-nlme r-cran-nnet r-cran-rpart r-cran-spatial r-cran-survival r-cran-rodbc r-base-dev
+
+RUN locale-gen en_US.UTF-8
+RUN dpkg-reconfigure locales
 
 EXPOSE 22
 CMD    /usr/sbin/sshd -D
