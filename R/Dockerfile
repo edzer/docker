@@ -14,10 +14,10 @@ RUN apt-get update
 
 RUN apt-get install -y openssh-server
 RUN mkdir /var/run/sshd 
-RUN echo 'root:screencast' | chpasswd
+RUN echo 'root:screencast' | chpasswd # change after starting
 RUN mkdir /home/edzer
 RUN useradd -m -u 1002 -s '/bin/bash' edzer
-RUN echo 'edzer:screencast' | chpasswd
+RUN echo 'edzer:screencast' | chpasswd # change after starting
 
 RUN apt-get install libcurl4-nss-dev
 
@@ -26,6 +26,8 @@ RUN apt-get install --fix-missing -y r-base r-cran-boot r-cran-class r-cran-clus
 
 RUN locale-gen en_US.UTF-8
 RUN dpkg-reconfigure locales
+
+RUN echo 'options(repos="http://cran.at.r-project.org/"); install.packages("opencpu")' | R --no-save
 
 EXPOSE 22
 CMD    /usr/sbin/sshd -D
